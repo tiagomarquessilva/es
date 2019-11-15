@@ -1,0 +1,170 @@
+
+package es.mini.projeto;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class GenerateNumbers {
+    
+    static boolean checkIfHasDigit( char digito, long num ){
+        
+        String numStr = Long.toString(num);
+        
+        for( int index = 0; index < numStr.length(); index++ ){
+            if ( numStr.charAt( index ) == digito ){
+                return true;
+            }
+        }    
+        
+        return false;
+    }
+    
+    static boolean isDivisibleBy( long digito, long num ){
+        return num % digito == 0;
+    }
+
+    public static void main(String[] args) {
+    
+        String A3 = new String("A3");
+        String A5 = new String("A5");
+        String A7 = new String("A7");
+        String D3 = new String("D3");
+        String D5 = new String("D5");
+        String D7 = new String("D7");
+        
+        String NA3 = new String("NA3");
+        String NA5 = new String("NA5");
+        String NA7 = new String("NA7");
+        String ND3 = new String("ND3");
+        String ND5 = new String("ND5");
+        String ND7 = new String("ND7");
+        
+        String[][] combinations = {{A3, NA5, NA7, ND3, ND5, ND7}, {A5, NA3, NA7, ND3, ND5, ND7}, {A7, NA3, NA5, ND3, ND5, ND7}, {D3, NA3, NA5, NA7, ND5, ND7}, {D5, NA3, NA5, NA7, ND3, ND7}, {D7, NA3, NA5, NA7, ND3, ND5}, {A3, A5, NA7, ND3, ND5, ND7}, {A3, A7, NA5, ND3, ND5, ND7}, {A3, D3, NA5, NA7, ND5, ND7}, {A3, D5, NA5, NA7, ND3, ND7}, {A3, D7, NA5, NA7, ND3, ND5}, {A5, A7, NA3, ND3, ND5, ND7}, {A5, D3, NA3, NA7, ND5, ND7}, {A5, D5, NA3, NA7, ND3, ND7}, {A5, D7, NA3, NA7, ND3, ND5}, {A7, D3, NA3, NA5, ND5, ND7}, {A7, D5, NA3, NA5, ND3, ND7}, {A7, D7, NA3, NA5, ND3, ND5}, {D3, D5, NA3, NA5, NA7, ND7}, {D3, D7, NA3, NA5, NA7, ND5}, {D5, D7, NA3, NA5, NA7, ND3}, {A3, A5, A7, ND3, ND5, ND7}, {A3, A5, D3, NA7, ND5, ND7}, {A3, A5, D5, NA7, ND3, ND7}, {A3, A5, D7, NA7, ND3, ND5}, {A3, A7, D3, NA5, ND5, ND7}, {A3, A7, D5, NA5, ND3, ND7}, {A3, A7, D7, NA5, ND3, ND5}, {A3, D3, D5, NA5, NA7, ND7}, {A3, D3, D7, NA5, NA7, ND5}, {A3, D5, D7, NA5, NA7, ND3}, {A5, A7, D3, NA3, ND5, ND7}, {A5, A7, D5, NA3, ND3, ND7}, {A5, A7, D7, NA3, ND3, ND5}, {A5, D3, D5, NA3, NA7, ND7}, {A5, D3, D7, NA3, NA7, ND5}, {A5, D5, D7, NA3, NA7, ND3}, {A7, D3, D5, NA3, NA5, ND7}, {A7, D3, D7, NA3, NA5, ND5}, {A7, D5, D7, NA3, NA5, ND3}, {D3, D5, D7, NA3, NA5, NA7}, {A3, A5, A7, D3, ND5, ND7}, {A3, A5, A7, D5, ND3, ND7}, {A3, A5, A7, D7, ND3, ND5}, {A3, A5, D3, D5, NA7, ND7}, {A3, A5, D3, D7, NA7, ND5}, {A3, A5, D5, D7, NA7, ND3}, {A3, A7, D3, D5, NA5, ND7}, {A3, A7, D3, D7, NA5, ND5}, {A3, A7, D5, D7, NA5, ND3}, {A3, D3, D5, D7, NA5, NA7}, {A5, A7, D3, D5, NA3, ND7}, {A5, A7, D3, D7, NA3, ND5}, {A5, A7, D5, D7, NA3, ND3}, {A5, D3, D5, D7, NA3, NA7}, {A7, D3, D5, D7, NA3, NA5}, {A3, A5, A7, D3, D5, ND7}, {A3, A5, A7, D3, D7, ND5}, {A3, A5, A7, D5, D7, ND3}, {A3, A5, D3, D5, D7, NA7}, {A3, A7, D3, D5, D7, NA5}, {A5, A7, D3, D5, D7, NA3}, {A3, A5, A7, D3, D5, D7}, {NA3, NA5, NA7, ND3, ND5, ND7}};
+        
+        for( int combination = 0; combination < combinations.length; combination++ ){
+            
+            boolean numFits = false;
+            List<Boolean> resultOfElements = new ArrayList<>();
+            long num = 0;         
+            
+            while(numFits == false){
+                
+            resultOfElements.clear();
+            num++;     
+                
+            for (String attribue : combinations[combination]) {
+                
+                if ( attribue.equals(D3) ) {
+                    if( isDivisibleBy(3, num) ){
+                        resultOfElements.add(true);
+                                                        
+                    } else {
+                        resultOfElements.add(false);    
+                }}
+                    
+                if ( attribue.equals(D5) ) {
+                    if( isDivisibleBy(5, num) ){
+                        resultOfElements.add(true);
+                                            
+                    } else {
+                        resultOfElements.add(false);    
+                }}
+                    
+                if ( attribue.equals(D7) ) {
+                    if( isDivisibleBy(7, num) ){
+                        resultOfElements.add(true);
+                                            
+                    } else {
+                        resultOfElements.add(false);    
+                }}            
+                
+                if ( attribue.equals(A3) ) {
+                    if( checkIfHasDigit('3', num) ){
+                        resultOfElements.add(true);
+                                            
+                    } else {
+                        resultOfElements.add(false);    
+                }}
+                
+                if ( attribue.equals(A5) ) {
+                    if( checkIfHasDigit('5', num) ){
+                        resultOfElements.add(true);
+                                            
+                    } else {
+                        resultOfElements.add(false);    
+                }}
+                    
+                if ( attribue.equals(A7) ) {
+                    if( checkIfHasDigit('7', num) ){
+                        resultOfElements.add(true);
+                    
+                    } else {
+                        resultOfElements.add(false);    
+                }}
+                
+                if ( attribue.equals(ND3) ) {
+                    if( isDivisibleBy(3, num) ){
+                        resultOfElements.add(false);
+                                                        
+                    } else {
+                        resultOfElements.add(true);    
+                }}
+                    
+                if ( attribue.equals(ND5) ) {
+                    if( isDivisibleBy(5, num) ){
+                        resultOfElements.add(false);
+                                            
+                    } else {
+                        resultOfElements.add(true);    
+                }}
+                    
+                if ( attribue.equals(ND7) ) {
+                    if( isDivisibleBy(7, num) ){
+                        resultOfElements.add(false);
+                                            
+                    } else {
+                        resultOfElements.add(true);    
+                }}            
+                
+                if ( attribue.equals(NA3) ) {
+                    if( checkIfHasDigit('3', num) ){
+                        resultOfElements.add(false);
+                                            
+                    } else {
+                        resultOfElements.add(true);    
+                }}
+                
+                if ( attribue.equals(NA5) ) {
+                    if( checkIfHasDigit('5', num) ){
+                        resultOfElements.add(false);
+                                            
+                    } else {
+                        resultOfElements.add(true);    
+                }}
+                    
+                if ( attribue.equals(NA7) ) {
+                    if( checkIfHasDigit('7', num) ){
+                        resultOfElements.add(false);
+                    
+                    } else {
+                        resultOfElements.add(true);    
+                }}
+                 
+            }
+            
+            if( resultOfElements.contains(false) ){
+                numFits = false;
+            } else {
+                numFits = true;
+                System.out.println(num);
+            }
+        }
+            
+    }
+        
+}
+}
+      

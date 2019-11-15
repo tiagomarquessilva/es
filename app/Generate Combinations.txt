@@ -1,0 +1,98 @@
+/*
+=======================
+PYTHON CODE TO ADD NOTS
+=======================
+
+
+A3 = "A3"
+A5 = "A5"
+A7 = "A7"
+D3 = "D3"
+D5 = "D5"
+D7 = "D7"
+
+NA3 = "NA3"
+NA5 = "NA5"
+NA7 = "NA7"
+ND3 = "ND3"
+ND5 = "ND5"
+ND7 = "ND7"
+
+combinations = [[A3], [A5], [A7], [D3], [D5], [D7], [A3, A5], [A3, A7], [A3, D3], [A3, D5], [A3, D7], [A5, A7], [A5, D3], [A5, D5], [A5, D7], [A7, D3], [A7, D5], [A7, D7], [D3, D5], [D3, D7], [D5, D7], [A3, A5, A7], [A3, A5, D3], [A3, A5, D5], [A3, A5, D7], [A3, A7, D3], [A3, A7, D5], [A3, A7, D7], [A3, D3, D5], [A3, D3, D7], [A3, D5, D7], [A5, A7, D3], [A5, A7, D5], [A5, A7, D7], [A5, D3, D5], [A5, D3, D7], [A5, D5, D7], [A7, D3, D5], [A7, D3, D7], [A7, D5, D7], [D3, D5, D7], [A3, A5, A7, D3], [A3, A5, A7, D5], [A3, A5, A7, D7], [A3, A5, D3, D5], [A3, A5, D3, D7], [A3, A5, D5, D7], [A3, A7, D3, D5], [A3, A7, D3, D7], [A3, A7, D5, D7], [A3, D3, D5, D7], [A5, A7, D3, D5], [A5, A7, D3, D7], [A5, A7, D5, D7], [A5, D3, D5, D7], [A7, D3, D5, D7], [A3, A5, A7, D3, D5], [A3, A5, A7, D3, D7], [A3, A5, A7, D5, D7], [A3, A5, D3, D5, D7], [A3, A7, D3, D5, D7], [A5, A7, D3, D5, D7], [A3, A5, A7, D3, D5, D7]]
+
+for combination in combinations:
+    if A3 not in combination:
+        combination.append(NA3)
+        
+    if A5 not in combination:
+        combination.append(NA5)
+        
+    if A7 not in combination:
+        combination.append(NA7)
+    
+    if D3 not in combination:
+        combination.append(ND3)
+        
+    if D5 not in combination:
+        combination.append(ND5)
+        
+    if D7 not in combination:
+        combination.append(ND7)
+
+print(combinations)
+        
+for combination1 in combinations:
+    clean = ""
+    for element in combination1:
+        clean += str(element) + " "
+    print(clean)
+    
+*/
+package es.mini.projeto;
+
+import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+public class GenerateCombinations {
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		String[] status = new String[] { "D3", "D5", "D7", "A3", "A5", "A7" };
+		SortedSet<SortedSet<Comparable>> allCombList = new TreeSet<SortedSet<Comparable>>(new Comparator<SortedSet<Comparable>>() {
+			@Override
+			public int compare(SortedSet<Comparable> o1, SortedSet<Comparable> o2) {
+				int sizeComp = o1.size() - o2.size();
+				if (sizeComp == 0) {
+					Iterator<Comparable> o1iIterator = o1.iterator();
+					Iterator<Comparable> o2iIterator = o2.iterator();
+					while (sizeComp == 0 && o1iIterator.hasNext() ) {
+						sizeComp = o1iIterator.next().compareTo(o2iIterator.next());
+					}
+				}
+				return sizeComp;
+			}
+		});
+		for (String nstatus : status) {
+			allCombList.add(new TreeSet<Comparable>(Arrays.asList(nstatus)));
+		}
+		for (int nivel = 1; nivel < status.length; nivel++) {
+			List<SortedSet<Comparable>> statusAntes = new ArrayList<SortedSet<Comparable>>(allCombList);
+			for (Set<Comparable> antes : statusAntes) {
+				SortedSet<Comparable> novo = new TreeSet<Comparable>(antes);
+				novo.add(status[nivel]);
+				allCombList.add(novo);
+                                System.out.println(novo);
+			}
+		}
+                System.out.println("\n");
+		System.out.println(allCombList);           
+	}
+};
